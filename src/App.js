@@ -13,32 +13,32 @@ class App extends Component {
     selectedDate:'',
     selectedTime:'9:00AM',
     showAdd: false,
-    pickups:[
-      {
+    pickups:{
+      drive1:{
         date: '2018-03-10',
         time: '9:00AM',
         place: 'CR151',
         people: 3
       },
-      {
+      drive2:{
         date: '2018-03-10',
         time: '12:00PM',
         place: 'CR122',
         people: 5
       },
-      {
+      drive3:{
         date: '2018-03-11',
         time: '9:00AM',
         place: 'CR151',
         people: 3
       },
-      {
+      drive4:{
         date: '2018-03-12',
         time: '12:00PM',
         place: 'CR122',
         people: 2
       }
-    ]
+    }
   }
 
   setSelectedDate = (value) => {
@@ -60,9 +60,10 @@ class App extends Component {
 
   /*******ADD DRIVES************************************* */
   addPickup = (pickup) => {
-    let {pickups} = this.state;
-    pickups.push(pickup);
-    this.setState({pickups: pickups});
+    const pickups = {...this.state.pickups};
+    const timestamp= Date.now();
+    pickups[`pickup${timestamp}`]=pickup;
+    this.setState({pickups});
     this.handleClose();
   }
 
