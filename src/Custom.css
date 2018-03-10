@@ -1,0 +1,8 @@
+.datePicker {
+    margin-bottom: 10px;
+}
+
+.pickupListItem .list-group-item-text {
+    display: flex;
+    justify-content: space-around;
+}
