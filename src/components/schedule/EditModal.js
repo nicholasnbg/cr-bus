@@ -6,12 +6,28 @@ import moment from 'moment';
 
 class EditModal extends React.Component {
     state={
-        busTimes: ['9:00AM','12:00PM','3:00PM']        
+        busTimes: ['9:00AM','12:00PM','3:00PM']
+    }
+
+
+    setEditedDate = (value) => {
+        let pickup = {...this.state.editedPickup};
+        pickup.date=value;
+        this.setState({editedPickup: pickup});
+    }
+
+    setEditedVal = (key, value) => {
+        console.log('setting edited val');
+        let pickup = {...this.state.editedPickup};
+        pickup[key]=value;
+        this.setState({editedPickup: pickup});
+        console.log(this.state.editedPickup);
     }
 
     render(){
-        const {show, onHide, pickup} = this.props;
+        const {show, onHide, pickup, editVal} = this.props;
         const {busTimes} = this.state;
+
 
         return(
             <Modal show={show} onHide={onHide}>
@@ -19,19 +35,23 @@ class EditModal extends React.Component {
                 <Modal.Body>
                     <FormGroup controlId="editDriveForm">
                         <ControlLabel>Date</ControlLabel>
-                        <DatePicker defaultValue={pickup.date}  onChange={this.setNewDate} />
+                        <DatePicker 
+                        defaultValue={pickup.date}
+                        onChange={editVal} 
+                        isEdit={true}
+                        />
                         <ControlLabel>Time</ControlLabel>
-                        <FormControl componentClass="select" defaultValue={pickup.time} onChange={event => this.setNewTime(event.target.value)}>
+                        <FormControl componentClass="select" value={pickup.time} onChange={event => editVal('time', event.target.value)}>
                             {busTimes.map((time, i) => (
                                 <option key={i}>{time}</option>
                             ))}
                         </FormControl>
                         <ControlLabel>Location</ControlLabel>
-                        <FormControl type="text" defaultValue={pickup.place} onChange={event => this.setNewPlace(event.target.value)}></FormControl>
+                        <FormControl type="text" value={pickup.place} onChange={event => editVal('place', event.target.value)}></FormControl>
                         <ControlLabel>No. People</ControlLabel>
-                        <FormControl type="number" defaultValue={pickup.people} min={1} max={12} onChange={event => this.setNewPeople(event.target.value)}></FormControl>
+                        <FormControl type="number" value={pickup.people} min={1} max={12} onChange={(event)=>editVal('people', event.target.value)}></FormControl>
                     </FormGroup>
-                    <Button bsStyle="primary" onClick={this.handleSubmit}>Add Pickup</Button>
+                    <Button bsStyle="primary">Edit Pickup</Button>
                 </Modal.Body>
             </Modal>
         )

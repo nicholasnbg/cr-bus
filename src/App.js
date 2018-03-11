@@ -82,8 +82,10 @@ class App extends Component {
     this.setState({editPickup: pickup});
     this.setState({showEdit: true});    
   }
-  editPickup = (pickup, key) => {
-
+  updateEditedVal = (key, value) => {
+    let pickup = this.state.editPickup;
+    pickup[key]=value;
+    this.setState({editPickup: pickup});
   }
 
   render() {
@@ -114,6 +116,7 @@ class App extends Component {
         />
         <EditModal
         show={this.state.showEdit}
+        editVal={this.updateEditedVal}
         onHide={this.handleClose}
         pickup={this.state.editPickup}
         />
