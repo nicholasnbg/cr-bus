@@ -7,12 +7,20 @@ import AddPickup from './components/navigation/AddPickup';
 import Schedule from './components/schedule/Schedule';
 import './App.css';
 import './Custom.css';
+import EditModal from './components/schedule/EditModal';
 
 class App extends Component {
   state={
     selectedDate:'',
     selectedTime:'9:00AM',
     showAdd: false,
+    showEdit: false,
+    editPickup:{
+      date: '',
+      time: '',
+      place: '',
+      people: 0
+    },
     pickups:{
       drive1:{
         date: '2018-03-10',
@@ -50,21 +58,32 @@ class App extends Component {
   }
   /********************MODAL FUNCTIONS******************* */
   handleClose=()=>{
-    this.setState({showAdd: false});
+    this.setState({
+      showAdd: false,
+      showEdit: false
+    });
   }
-
+ 
   showAddModal = () => { 
     console.log('show modal');
     this.setState({showAdd: true});
   }
 
-  /*******ADD DRIVES************************************* */
+  /*******ADD PICKUP************************************* */
   addPickup = (pickup) => {
     const pickups = {...this.state.pickups};
     const timestamp= Date.now();
     pickups[`pickup${timestamp}`]=pickup;
     this.setState({pickups});
     this.handleClose();
+  }
+  /*******EDIT PCKUP************************************** */
+  showEditModal = (pickup, key) =>{
+    this.setState({editPickup: pickup});
+    this.setState({showEdit: true});    
+  }
+  editPickup = (pickup, key) => {
+
   }
 
   render() {
@@ -84,6 +103,7 @@ class App extends Component {
             pickups={this.state.pickups}
             date={this.state.selectedDate}
             time={this.state.selectedTime}
+            showEditModal={this.showEditModal}
             />
           </Col>
         </Grid>
@@ -91,6 +111,11 @@ class App extends Component {
         show={this.state.showAdd}
         onHide={this.handleClose}
         addPickup={this.addPickup}
+        />
+        <EditModal
+        show={this.state.showEdit}
+        onHide={this.handleClose}
+        pickup={this.state.editPickup}
         />
       </div>
     );
