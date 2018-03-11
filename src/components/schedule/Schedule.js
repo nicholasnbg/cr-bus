@@ -16,7 +16,8 @@ class Schedule extends React.Component {
                 <PickupListItem
                 showEditModal={showEditModal} 
                 pickup={item} 
-                key={index}/>
+                key={index}
+                reqKey={reqKeys[index]}/>
                 ))}  
             </ListGroup>
             

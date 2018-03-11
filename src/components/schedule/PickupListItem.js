@@ -4,7 +4,7 @@ import {ListGroupItem, Button, Panel} from 'react-bootstrap';
 class PickupListItem extends React.Component {
 
     render(){
-        const {pickup, showEditModal} = this.props;
+        const {pickup, showEditModal, reqKey} = this.props;
         return(
             <ListGroupItem className="pickupListItem" >
                 <Panel>
@@ -13,7 +13,7 @@ class PickupListItem extends React.Component {
                         <span><strong>Time:</strong> {`${pickup.time}`}</span><span><strong>No. People: </strong>{`${pickup.people}`}</span>  
                         <Button 
                         bsStyle="primary"
-                        onClick={(event)=>showEditModal(pickup,"keytest")}
+                        onClick={(event)=>showEditModal(pickup,reqKey)}
                         >Edit</Button>               
                     </Panel.Body>
                 </Panel>

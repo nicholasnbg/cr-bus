@@ -25,7 +25,7 @@ class EditModal extends React.Component {
     }
 
     render(){
-        const {show, onHide, pickup, editVal} = this.props;
+        const {show, onHide, pickup, editVal, handleSubmit} = this.props;
         const {busTimes} = this.state;
 
 
@@ -51,7 +51,7 @@ class EditModal extends React.Component {
                         <ControlLabel>No. People</ControlLabel>
                         <FormControl type="number" value={pickup.people} min={1} max={12} onChange={(event)=>editVal('people', event.target.value)}></FormControl>
                     </FormGroup>
-                    <Button bsStyle="primary">Edit Pickup</Button>
+                    <Button bsStyle="primary" onClick={handleSubmit}>Edit Pickup</Button>
                 </Modal.Body>
             </Modal>
         )

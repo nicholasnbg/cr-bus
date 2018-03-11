@@ -15,6 +15,7 @@ class App extends Component {
     selectedTime:'9:00AM',
     showAdd: false,
     showEdit: false,
+    editPickupKey: '',
     editPickup:{
       date: '',
       time: '',
@@ -79,13 +80,26 @@ class App extends Component {
   }
   /*******EDIT PCKUP************************************** */
   showEditModal = (pickup, key) =>{
-    this.setState({editPickup: pickup});
+    this.setState({
+      editPickup: pickup,
+      editPickupKey: key
+    });
     this.setState({showEdit: true});    
   }
   updateEditedVal = (key, value) => {
     let pickup = this.state.editPickup;
     pickup[key]=value;
     this.setState({editPickup: pickup});
+  }
+
+  handleEditSubmit = () => {
+    this.editPickup(this.state.editPickupKey, this.state.editPickup);
+  }
+  editPickup = (key, pickup) => {
+    let {pickups} = this.state;
+    pickups[key] = pickup;
+    this.setState({pickups: pickups});
+    this.handleClose();
   }
 
   render() {
@@ -119,6 +133,7 @@ class App extends Component {
         editVal={this.updateEditedVal}
         onHide={this.handleClose}
         pickup={this.state.editPickup}
+        handleSubmit={this.handleEditSubmit}
         />
       </div>
     );
