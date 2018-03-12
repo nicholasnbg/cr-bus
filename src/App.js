@@ -102,6 +102,15 @@ class App extends Component {
     this.handleClose();
   }
 
+  /*************DELETE PICKUP***************************** */
+  deletePickup = (key) => {
+    // const pickups = {...this.state.pickups};
+    const pickups = Object.assign({}, this.state.pickups);
+    // pickups[key] = null;
+    delete pickups[key];
+    this.setState({pickups: pickups});
+  }
+
   render() {
     return (
       <div className="App">
@@ -112,7 +121,10 @@ class App extends Component {
             setSelectedDate={this.setSelectedDate}
             setSelectedTime={this.setSelectedTime}
             />
-            <Button bsStyle="success" onClick={() => this.showAddModal()}>Add Pickup</Button>
+            <Button bsStyle="success" 
+            onClick={() => this.showAddModal()}>
+            Add Pickup
+            </Button>
           </Col>
           <Col sm={12} md={8}>
             <Schedule 
@@ -120,6 +132,7 @@ class App extends Component {
             date={this.state.selectedDate}
             time={this.state.selectedTime}
             showEditModal={this.showEditModal}
+            deletePickup={this.deletePickup}
             />
           </Col>
         </Grid>
