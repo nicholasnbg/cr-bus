@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Clearfix, Button } from 'react-bootstrap';
-import moment from 'react-moment';
+import { Grid, Col, Button } from 'react-bootstrap';
 import Header from './components/Header';
 import Picker from './components/navigation/Picker';
 import AddPickup from './components/navigation/AddPickup';
 import Schedule from './components/schedule/Schedule';
+import firebase from './firebase';
 import './App.css';
 import './Custom.css';
 import EditModal from './components/schedule/EditModal';
@@ -23,32 +23,27 @@ class App extends Component {
       people: 0
     },
     pickups:{
-      drive1:{
-        date: '2018-03-10',
-        time: '9:00AM',
-        place: 'CR151',
-        people: 3
-      },
-      drive2:{
-        date: '2018-03-10',
-        time: '12:00PM',
-        place: 'CR122',
-        people: 5
-      },
-      drive3:{
-        date: '2018-03-11',
-        time: '9:00AM',
-        place: 'CR151',
-        people: 3
-      },
-      drive4:{
-        date: '2018-03-12',
-        time: '12:00PM',
-        place: 'CR122',
-        people: 2
-      }
+     
     }
   }
+
+
+
+  
+  /***********************LIFE CYCLE FUNCTIONS************ */
+  componentDidMount(){
+    const pickupsRef = firebase.database().ref();
+    pickupsRef.on('value', (snapshot) => {
+      console.log(snapshot.val())
+      let pickups = snapshot.val();
+      let newState = {};
+      for(let pickup in pickups) { 
+        newState[pickup] = pickups[pickup];
+      }
+      this.setState({pickups: newState});
+    })
+  }
+
 
   setSelectedDate = (value) => {
     this.setState({selectedDate: value});
@@ -72,10 +67,8 @@ class App extends Component {
 
   /*******ADD PICKUP************************************* */
   addPickup = (pickup) => {
-    const pickups = {...this.state.pickups};
     const timestamp= Date.now();
-    pickups[`pickup${timestamp}`]=pickup;
-    this.setState({pickups});
+    const pickupsRef = firebase.database().ref(`pickup${timestamp}`).set(pickup);    
     this.handleClose();
   }
   /*******EDIT PCKUP************************************** */
@@ -96,19 +89,15 @@ class App extends Component {
     this.editPickup(this.state.editPickupKey, this.state.editPickup);
   }
   editPickup = (key, pickup) => {
-    let {pickups} = this.state;
-    pickups[key] = pickup;
-    this.setState({pickups: pickups});
+    const pickupsRef = firebase.database().ref(key).set(pickup);
     this.handleClose();
   }
 
   /*************DELETE PICKUP***************************** */
   deletePickup = (key) => {
-    // const pickups = {...this.state.pickups};
-    const pickups = Object.assign({}, this.state.pickups);
-    // pickups[key] = null;
-    delete pickups[key];
-    this.setState({pickups: pickups});
+    if(window.confirm("Are you sure you want to delete this?")){
+      const pickupsRef = firebase.database().ref(key).remove();      
+    };
   }
 
   render() {

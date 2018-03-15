@@ -1,8 +1,7 @@
 import React from 'react';
 import {Modal, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap'; 
 import DatePicker from '../DatePicker';
-import moment from 'moment';
-
+    
 
 class EditModal extends React.Component {
     state={

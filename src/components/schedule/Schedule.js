@@ -1,6 +1,5 @@
 import React from 'react';
 import PickupListItem from './PickupListItem';
-import EditModal from './EditModal';
 import {ListGroup} from 'react-bootstrap';
 
 class Schedule extends React.Component {
