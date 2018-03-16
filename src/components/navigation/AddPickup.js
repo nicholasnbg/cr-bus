@@ -38,6 +38,12 @@ class AddPickup extends React.Component {
             people: newPeople
         }
         this.props.addPickup(newPickup);
+        this.setState({
+            newDate: '',
+            newTime: '9:00AM',
+            newPlace: '',
+            newPeople: 1
+        })
     }
 
     render(){
