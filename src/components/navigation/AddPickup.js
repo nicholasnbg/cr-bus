@@ -39,7 +39,7 @@ class AddPickup extends React.Component {
         }
         this.props.addPickup(newPickup);
         this.setState({
-            newDate: '',
+            newDate: moment(new Date).format('YYYY-MM-DD'),
             newTime: '9:00AM',
             newPlace: '',
             newPeople: 1
